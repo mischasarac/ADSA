@@ -16,7 +16,7 @@ int main() {
     cout << "Enter values for operations l1 l2 B" << endl;
     cin >> l1 >> l2 >> base;
 
-    cout <<  add(l1, l2, base) << " " << karatsuba(l1, l2, base)<< endl;
+    cout <<  add(l1, l2, base) << " " << karatsuba(l1, l2, base) << " 0" << endl;
 
     return 0;
 }
@@ -111,7 +111,6 @@ string shift(string str, int steps) {
 
 string karatsuba(string l1, string l2, string base) {
     int n = matchSize(l1, l2);
-    int baseInt = stoi(base);
 
     if (n == 0) return "";
     if (n == 1) return multiplyBase(l1, l2, base);
