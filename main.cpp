@@ -16,7 +16,7 @@ int main() {
     cout << "Enter values for operations l1 l2 B" << endl;
     cin >> l1 >> l2 >> base;
 
-    cout <<  add(l1, l2, base) << " " << karatsuba(l1, l2, base) << " 0" << endl;
+    cout <<  add(l1, l2, base) << " " << karatsuba(l1, l2, base)<< endl;
 
     return 0;
 }
