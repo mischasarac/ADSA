@@ -13,7 +13,6 @@ string karatsuba(string l1, string l2, string base);
 int main() {
     string l1, l2, base;
     // Taking inputs
-    cout << "Enter values for operations l1 l2 B" << endl;
     cin >> l1 >> l2 >> base;
 
     cout <<  add(l1, l2, base) << " " << karatsuba(l1, l2, base) << " 0" << endl;
