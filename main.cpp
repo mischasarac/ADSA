@@ -11,6 +11,7 @@ string karatsuba(string l1, string l2, string base);
 
 int main() {
     string l1, l2, base;
+    // Taking inputs
     cout << "Enter values for operations l1 l2 B" << endl;
     cin >> l1 >> l2 >> base;
 
@@ -22,6 +23,7 @@ int main() {
 }
 
 int matchSize(string &l1, string &l2) {
+    // Matching sizes while one size is greater than another
     while (l1.size() < l2.size()) l1 = '0' + l1;
     while (l2.size() < l1.size()) l2 = '0' + l2;
     return l1.size();
@@ -29,6 +31,7 @@ int matchSize(string &l1, string &l2) {
 
 string add(string l1, string l2, string base) {
     string result = "";
+    // Picking smaller size for efficiency
     if (l1.size() < l2.size()) {
         swap(l1, l2);
     }
@@ -88,7 +91,15 @@ string multiplyBase(string l1, string l2, string base) {
     int num1 = stoi(l1);
     int num2 = stoi(l2);
     int result = num1 * num2;
-    return to_string(result);
+    string res = "";
+
+    // Convert result to the given base
+    while (result > 0) {
+        res = char((result % baseInt) + '0') + res;
+        result /= baseInt;
+    }
+
+    return res == "" ? "0" : res;
 }
 
 string shift(string str, int steps) {
@@ -104,8 +115,9 @@ string karatsuba(string l1, string l2, string base) {
     if (n == 0) return "";
     if (n == 1) return multiplyBase(l1, l2, base);
 
+    // Approximately halving size
     int n2 = n / 2;
-    int sp = n - n2;
+    int sp = n - n2; // Second part size
 
     string x1 = l1.substr(0, n2);
     string x0 = l1.substr(n2, sp);
@@ -113,6 +125,7 @@ string karatsuba(string l1, string l2, string base) {
     string y1 = l2.substr(0, n2);
     string y0 = l2.substr(n2, sp);
 
+    // Applying 3 different multiplications needed recursively
     string z2 = karatsuba(x1, y1, base);
     string z0 = karatsuba(x0, y0, base);
     string z3 = karatsuba(add(x0, x1, base), add(y0, y1, base), base);
