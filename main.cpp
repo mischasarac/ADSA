@@ -45,9 +45,9 @@ Node* rLeft(Node* n) {
     r->left = n;
     n->right = temp;
 
-    r->height = 1 + max(height(r->left), height(r->right));
     n->height = 1 + max(height(n->left), height(n->right));
-
+    r->height = 1 + max(height(r->left), height(r->right));
+    
     return r;
 }
 
