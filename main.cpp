@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 
@@ -70,7 +71,7 @@ int currBalance(Node* n){
 // head -> left -> right
 void preOrder(Node* root){
     if(root){
-        cout << root->val << endl;
+        cout << root->val << " ";
         preOrder(root->left);
         preOrder(root->right);
     }
@@ -81,7 +82,7 @@ void postOrder(Node* root){
     if(root){
         postOrder(root->left);
         postOrder(root->right);
-        cout << root->val << endl;
+        cout << root->val << " ";
     }
 }
 
@@ -114,14 +115,14 @@ Node* insert(Node* root, int val){
 
     if(cost < -1){
         if(val < (root->right)->val){
-            cout << "rl : " << root->val << endl;
+            // cout << "rl : " << root->val << endl;
             root->right = rRight(root->right);
         }
         return rLeft(root);
     }
     if(cost > 1){
         if(val > (root->left)->val){
-            cout << "lr : " << root->val << endl;
+            // cout << "lr : " << root->val << endl;
             root->left = rLeft(root->left);
         }
         return rRight(root);
@@ -200,36 +201,64 @@ Node* remove(Node* root, int val){
 int main(){
     Node *root = nullptr;
 
-    // Constructing tree given in the 
-    // above figure
-    cout << "Inserting 9" << endl;
-    root = insert(root, 9);
-    cout << "Inserting 5" << endl;
-    root = insert(root, 5);
-    cout << "Inserting 10" << endl;
-    root = insert(root, 10);
-    cout << "Inserting 0" << endl;
-    root = insert(root, 0);
-    cout << "Inserting 6" << endl;
-    root = insert(root, 6);
-    cout << "Inserting 11" << endl;
-    root = insert(root, 11);
-    cout << "Inserting -1" << endl;
-    root = insert(root, -1);
-    cout << "Inserting 1" << endl;
-    root = insert(root, 1);
-    cout << "Inserting " << endl;
-    root = insert(root, 2);
+    string input;
+    vector<pair<int,bool>> vals;
+    getline(cin, input);
 
-    cout << "Preorder traversal of the "
-            "constructed AVL tree is \n";
-    preOrder(root);
+    int i = 0;
+    bool del;
+    string num;
 
-    root = remove(root, 10);
+    cout << input.size() << endl;
 
-    cout << "\nPreorder traversal after"
-            " deletion of 10 \n";
-    preOrder(root);
+    while (i < input.size() && (input[i] == 'A' || input[i] == 'D'))
+    {
+        cout << "Loop" << endl;
+        del = false;
+        num = "";
+        if(input[i] == 'D'){
+            del = true;
+        }
+
+        while(input[i] != ' '){
+            cout << input[i] << endl;
+            i++; // incrementing i to be the start of the number;
+            num += input[i];
+        }
+
+        int a = stoi(num);
+
+        vals.push_back({a, del});
+        i++;
+    }
+
+    for(auto j : vals){
+        if(j.second){
+            root = remove(root, j.first);
+        } else {
+            root = insert(root, j.first);
+        }
+    }
+    
+    if(i >= input.size()){
+        return 0;
+    } else {
+        if(root == nullptr){
+            cout << "EMPTY";
+        }
+
+        if(input[i] == 'I'){
+            inOrder(root);
+        } else {
+            if(input[i+1] == 'O'){
+                postOrder(root);
+            } else {
+                preOrder(root);
+            }
+        }
+    }
+
+    cout << endl;
 
     return 0;
 }
