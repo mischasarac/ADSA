@@ -213,7 +213,7 @@ int main(){
 
     while (i < input.size() && (input[i] == 'A' || input[i] == 'D'))
     {
-        cout << "Loop" << endl;
+        // cout << "Loop" << endl;
         del = false;
         num = "";
         if(input[i] == 'D'){
@@ -221,7 +221,7 @@ int main(){
         }
 
         while(input[i] != ' '){
-            cout << input[i] << endl;
+            // cout << input[i] << endl;
             i++; // incrementing i to be the start of the number;
             num += input[i];
         }
