@@ -205,7 +205,7 @@ int main() {
 
         if (!num.empty()) {
             int a = stoi(num);
-            cout << a << endl;
+            // cout << a << endl;
             vals.push_back({a, del});
         }
 
