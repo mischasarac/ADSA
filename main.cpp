@@ -9,8 +9,8 @@ struct Node {
     Node* left;
     Node* right;
 
-    Node(int val) {
-        this->val = val;
+    Node(int v) {
+        this->val = v;
         this->height = 1;
         this->left = nullptr;
         this->right = nullptr;
@@ -19,7 +19,7 @@ struct Node {
 
 // Helper functions for AVL tree operations
 int height(Node* n) {
-    if (!n) return 0;
+    if (n == nullptr) return 0;
     return n->height;
 }
 
@@ -31,8 +31,8 @@ Node* rRight(Node* n) {
     l->right = n;
     n->left = temp;
 
-    l->height = 1 + max(height(l->left), height(l->right));
     n->height = 1 + max(height(n->left), height(n->right));
+    l->height = 1 + max(height(l->left), height(l->right));
 
     return l;
 }
@@ -52,12 +52,12 @@ Node* rLeft(Node* n) {
 }
 
 int currBalance(Node* n) {
-    if (!n) return 0;
+    if (n == nullptr) return 0;
     return height(n->left) - height(n->right);
 }
 
 Node* insert(Node* root, int val) {
-    if (!root) return new Node(val);
+    if (root == nullptr) return new Node(val);
 
     if (val < root->val)
         root->left = insert(root->left, val);
@@ -94,12 +94,12 @@ Node* insert(Node* root, int val) {
 
 // AVL remove function
 Node* leftmostRight(Node* root) {
-    while (root && root->left) root = root->left;
+    while (root != nullptr && root->left != nullptr) root = root->left;
     return root;
 }
 
 Node* remove(Node* root, int val) {
-    if (!root) return nullptr;
+    if (root == nullptr) return nullptr;
 
     if (val < root->val)
         root->left = remove(root->left, val);
@@ -122,7 +122,7 @@ Node* remove(Node* root, int val) {
         }
     }
 
-    if (!root) return nullptr;
+    if (root == nullptr) return nullptr;
 
     root->height = 1 + max(height(root->left), height(root->right));
 
@@ -147,7 +147,7 @@ Node* remove(Node* root, int val) {
 
 // Pre-order traversal
 void preOrder(Node* root) {
-    if (root) {
+    if (root != nullptr) {
         cout << root->val << " ";
         preOrder(root->left);
         preOrder(root->right);
@@ -156,7 +156,7 @@ void preOrder(Node* root) {
 
 // Post-order traversal
 void postOrder(Node* root) {
-    if (root) {
+    if (root != nullptr) {
         postOrder(root->left);
         postOrder(root->right);
         cout << root->val << " ";
@@ -165,7 +165,7 @@ void postOrder(Node* root) {
 
 // In-order traversal
 void inOrder(Node* root) {
-    if (root) {
+    if (root != nullptr) {
         inOrder(root->left);
         cout << root->val << " ";
         inOrder(root->right);
@@ -198,13 +198,14 @@ int main() {
         }
 
         // Extract the numbers
-        while (i < input.size() && isdigit(input[i])) {
+        while (i < input.size() && (isdigit(input[i]) || input[i] == '-')) {
             num += input[i];
             i++;
         }
 
         if (!num.empty()) {
             int a = stoi(num);
+            cout << a << endl;
             vals.push_back({a, del});
         }
 
