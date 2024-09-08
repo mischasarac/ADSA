@@ -94,7 +94,7 @@ Node* insert(Node* root, int val) {
 
 // AVL remove function
 Node* leftmostRight(Node* root) {
-    while (root != nullptr && root->left != nullptr) root = root->left;
+    while (root->left != nullptr) root = root->left;
     return root;
 }
 
@@ -122,11 +122,14 @@ Node* remove(Node* root, int val) {
         }
     }
 
-    if (root == nullptr) return nullptr;
+    if (root == nullptr) return root;
 
     root->height = 1 + max(height(root->left), height(root->right));
 
     int balance = currBalance(root);
+    
+    // Add debugging info here
+    cout << "Removing: " << val << ", balancing node: " << root->val << ", balance: " << balance << endl;
 
     if (balance > 1 && currBalance(root->left) < 0) {
         root->left = rLeft(root->left);
@@ -144,6 +147,7 @@ Node* remove(Node* root, int val) {
 
     return root;
 }
+
 
 // Pre-order traversal
 void preOrder(Node* root) {
@@ -224,6 +228,10 @@ int main() {
     }
 
     // Handle output based on the command
+    if(root == nullptr){
+        cout << "EMPTY" << endl;;
+        return 0;
+    }
     if (i < input.size()) {
         if (input[i] == 'I') {
             inOrder(root);
@@ -232,9 +240,7 @@ int main() {
         } else {
             preOrder(root);
         }
-    } else if (root == nullptr) {
-        cout << "EMPTY";
-    }
+    } 
 
     cout << endl;
     return 0;
