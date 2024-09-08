@@ -93,8 +93,8 @@ Node* insert(Node* root, int val) {
 }
 
 // AVL remove function
-Node* leftmostRight(Node* root) {
-    while (root->left != nullptr) root = root->left;
+Node* rightmostLeft(Node* root) {
+    while (root != nullptr && root->right != nullptr) root = root->right;
     return root;
 }
 
@@ -114,16 +114,16 @@ Node* remove(Node* root, int val) {
             } else {
                 *root = *temp;
             }
+
             delete temp;
         } else {
-            Node* temp = leftmostRight(root->right);
+            Node* temp = rightmostLeft(root->left);
             root->val = temp->val;
-            root->right = remove(root->right, temp->val);
+            root->left = remove(root->left, temp->val);
         }
     }
 
     if (root == nullptr) return root;
-
     root->height = 1 + max(height(root->left), height(root->right));
 
     int balance = currBalance(root);
@@ -131,19 +131,26 @@ Node* remove(Node* root, int val) {
     // Add debugging info here
     // cout << "Removing: " << val << ", balancing node: " << root->val << ", balance: " << balance << endl;
 
+
+    if (balance > 1 && currBalance(root->left) >= 0)
+        return rRight(root);
+
+    // Left Right Case
     if (balance > 1 && currBalance(root->left) < 0) {
         root->left = rLeft(root->left);
         return rRight(root);
     }
-    if (balance > 1 && currBalance(root->left) >= 0)
-        return rRight(root);
 
+    // Right Right Case
+    if (balance < -1 && currBalance(root->right) <= 0)
+        return rLeft(root);
+
+    // Right Left Case
     if (balance < -1 && currBalance(root->right) > 0) {
         root->right = rRight(root->right);
         return rLeft(root);
     }
-    if (balance < -1 && currBalance(root->right) <= 0)
-        return rLeft(root);
+
 
     return root;
 }
