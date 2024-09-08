@@ -129,7 +129,7 @@ Node* remove(Node* root, int val) {
     int balance = currBalance(root);
     
     // Add debugging info here
-    cout << "Removing: " << val << ", balancing node: " << root->val << ", balance: " << balance << endl;
+    // cout << "Removing: " << val << ", balancing node: " << root->val << ", balance: " << balance << endl;
 
     if (balance > 1 && currBalance(root->left) < 0) {
         root->left = rLeft(root->left);
