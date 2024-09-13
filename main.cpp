@@ -30,7 +30,7 @@ void insert(string key, vector<vector<Entry*>>& map){
     int pos = key[key.size()-1] - 'a';  // Getting position
 
     int i = 0;
-    while(map[pos].size() - i != 0 && map[pos][i]->word != key){ // Ensuring value doesn't already exist in map
+    while(map[pos].size() - i != 0){ // Ensuring value doesn't already exist in map
         if(map[pos][i]->word == key){
             map[pos][i]->makeActive();
             return;
