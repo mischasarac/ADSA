@@ -33,7 +33,7 @@ public:
 void insert(string val, vector<slot>& map){
     int pos = val[val.size()-1] - 'a';
     
-    while(map[pos].activity){
+    while(map[pos].activity == 1){
         if(map[pos].word == val){
             map[pos].activity = 1;
             return;
