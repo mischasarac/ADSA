@@ -1,62 +1,69 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-class Entry{
+
+class slot {
 public:
     string word;
-    bool active;
-    Entry(){
-        this->word = "";
-        this->active = false;
+    int activity; // 0 = never used -> 1 = active -> 2 = tombstone
+
+    slot(){
+        this->activity = 0;
     }
 
-    Entry(string word) : word(word) {
-        this->active = true;
+    slot(string word){
+        this->word = word;
+        activity = 1;
     }
 
     void makeInactive(){
-        this->active = false;
+        this->activity = 2;
     }
 
     void makeActive(){
-        this->active = true;
+        this->activity = 1;
     }
 };
 
-void insert(string key, vector<vector<Entry*>>& map){
-    int pos = key[key.size()-1] - 'a';  // Getting position
 
-    int i = 0;
-    while(map[pos].size() - i != 0){ // Ensuring value doesn't already exist in map
-        if(map[pos][i]->word == key){
-            map[pos][i]->makeActive();
+
+void insert(string val, vector<slot>& map){
+    int pos = val[val.size()-1] - 'a';
+    
+    while(map[pos].activity){
+        if(map[pos].word == val){
+            map[pos].activity = 1;
             return;
         }
-        i++;
+        pos++;
+        pos = pos % 26;
     }
 
-    map[pos].push_back(new Entry(key));  // Inserting the new word at correct index
+    map[pos].word = val;
+    map[pos].activity = 1;
 }
 
-void remove(string key, vector<vector<Entry*>>& map){
-    int pos = key[key.size()-1] - 'a';  // Getting position
+void remove(string val, vector<slot>& map){
+    int pos = val[val.size()-1] - 'a';
+    int start = pos-1;
 
-    int i = 0;
-    while(map[pos].size() - i != 0){
-        // cout << "map[pos][i]: " << map[pos][i]->word << endl;
-        if(map[pos][i]->word == key){
-            map[pos][i]->makeInactive();
+    while(pos != start){
+        pos++;
+        pos = pos % 26;
+        if(map[pos].word == val){
+            map[pos].activity = 2;
             return;
         }
-        i++;
     }
 }
+
 
 int main(){
-    vector<vector<Entry*>> vals(26, vector<Entry*>());
+    vector<slot> vals(26, slot());
+
     string input;
     getline(cin, input);
 
@@ -68,6 +75,7 @@ int main(){
         else if(i != ' ') word += i;
         if(i == ' '){
             if(key == 'A'){
+                // cout << "inserting" << endl;
                 insert(word, vals);
                 // Printing size of the correct index
                 // int pos = word[word.size()-1] - 'a';  // Use last character
@@ -89,19 +97,18 @@ int main(){
         // cout << "Removing: " << word << endl;
     }
 
+    // cout << vals[0].word << endl;
+
     // Output
     // cout << "Printing: ";
     // cout << vals[1].size() << endl;
-    for(int i = 0; i < vals.size(); i++){
-        if(vals[i].size() != 0){
-            for(auto j : vals[i]){
-                if(j->active){
-                    cout << j->word << " ";
-                }
-            }
-        }
+    for(auto i : vals){
+        if(i.activity == 1){
+            cout << i.word << " ";
+        } 
     }
     cout << endl;
 
     return 0;
+
 }
