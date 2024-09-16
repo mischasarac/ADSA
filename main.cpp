@@ -48,16 +48,27 @@ void insert(string val, vector<slot>& map){
 
 void remove(string val, vector<slot>& map){
     int pos = val[val.size()-1] - 'a';
-    int start = pos-1;
+    
+    int start = (pos + 25) % 26;
+
+    // cout << "val : " << val << endl;
 
     while(pos != start){
-        pos++;
-        pos = pos % 26;
+        if(map[pos].activity == 0){
+            // cout << "this called for " << val << endl;
+            return;
+        }
         if(map[pos].word == val){
+            // cout << "val : " << val << endl;
             map[pos].activity = 2;
             return;
         }
+        pos++;
+        pos = pos % 26;
+        
     }
+
+    return;
 }
 
 
