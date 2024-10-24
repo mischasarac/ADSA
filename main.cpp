@@ -42,21 +42,25 @@ public:
                 if(graph[u][v] && mstSet[v] == false && graph[u][v] < key[v]){
                     parent[v] = u;
                     key[v] = graph[u][v];
-                    if(key[v] < 0){
-                        this->removeTotal += key[v];
-                    }
+                } else if(graph[u][v] < 0){
+                    removeTotal += graph[u][v];
                 }
             }
         }
 
         int total = 0;
 
-        for (int i = 0; i < key.size(); i++)
+        for (int i = 1; i < key.size(); i++)
         {
+            // cout << key[i] << " ";
             total += key[i];
         }
+        // cout << "\n Total: " << removeTotal;
+
+        // cout << "\n\n";
+
         
-        return total - removeTotal;
+        return total;
 
     }
 
@@ -93,9 +97,6 @@ int main()
 
     cin >> i1 >> i2 >> i3;
 
-    cout << "\n\n";
-    cout << "\n\n";
-    cout << "\n\n";
 
 
     vector<vector<int>> v1;
@@ -111,17 +112,29 @@ int main()
         }
         if(i1[i] == '0'){ // if road does not exist, add sum of removing road and building road
             v1[count].push_back(l2n(i2[i]));
-        } else { // else the road exists, add 0
+        } else { // else the road exists
             v1[count].push_back(-(l2n(i3[i])));
             removeTotal -= l2n(i3[i]);
         }
     }
 
+    // for(int i = 0; i < v1.size(); i++){
+    //     for(int j = 0; j < v1[i].size(); j++){
+    //         cout << v1[i][j] << " ";
+    //     }
+    //     cout << "\n";
+    // }
+    // cout << "Remove Total: " << reoveTotal << endl;
+    if(removeTotal % 2 == 0){
+        removeTotal--;
+    }
+    removeTotal = removeTotal / 2;
 
+    // cout << "Remove Total: " << removeTotal << endl;
 
     
     // Function call
-    cout << p.Prims(v1) << endl;
+    cout << p.Prims(v1) - removeTotal << endl;
     return 0;
 }
 
