@@ -87,26 +87,14 @@ int main()
 {   
     string i1, i2, i3;
     PrimMST p;
-    /* Let us create the following weighted graph
-            10
-    (0)------->(3)
-        |     /|\
-    5 |     |
-        |     | 1
-    \|/     |
-    (1)------->(2)
-            3     */
     // i1 = remove or rebuild boolean
     // i2 = build cost
     // i3 = remove cost
 
     cin >> i1 >> i2 >> i3;
 
-    printString(i1);
     cout << "\n\n";
-    printString(i2);
     cout << "\n\n";
-    printString(i3);
     cout << "\n\n";
 
 
