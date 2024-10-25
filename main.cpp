@@ -55,9 +55,6 @@ public:
             // cout << key[i] << " ";
             total += key[i];
         }
-        // cout << "\n Total: " << removeTotal;
-
-        // cout << "\n\n";
 
         
         return total;
@@ -73,17 +70,7 @@ public:
 };
 
 int l2n(char c){
-        return c <= 'Z' ? c - 'A' : c - 'a' + 26;
-    }
-
-void printString(string s){
-    for(int i = 0; i < s.size(); i++){
-        if(s[i] == ','){
-            cout << "\n";
-        } else {
-            cout << s[i] << " ";
-        }
-    }
+    return c <= 'Z' ? c - 'A' : c - 'a' + 26;
 }
 
 // Driver's code
@@ -97,8 +84,6 @@ int main()
 
     cin >> i1 >> i2 >> i3;
 
-
-
     vector<vector<int>> v1;
     v1.push_back(vector<int>());
     int count = 0;
@@ -110,23 +95,18 @@ int main()
             count++;
             continue;
         }
+
         if(i1[i] == '0'){ // if road does not exist, add sum of removing road and building road
             v1[count].push_back(l2n(i2[i]));
         } else { // else the road exists
             v1[count].push_back(-(l2n(i3[i])));
-            removeTotal -= l2n(i3[i]);
+            removeTotal += l2n(i3[i]);
         }
     }
 
-    // for(int i = 0; i < v1.size(); i++){
-    //     for(int j = 0; j < v1[i].size(); j++){
-    //         cout << v1[i][j] << " ";
-    //     }
-    //     cout << "\n";
-    // }
-    // cout << "Remove Total: " << reoveTotal << endl;
-    if(removeTotal % 2 == 0){
-        removeTotal--;
+
+    if(removeTotal % 2){
+        removeTotal++;
     }
     removeTotal = removeTotal / 2;
 
@@ -134,8 +114,6 @@ int main()
 
     
     // Function call
-    cout << p.Prims(v1) - removeTotal << endl;
+    cout << p.Prims(v1) + removeTotal << endl;
     return 0;
 }
-
-// This code is contributed by Mythri J L
